@@ -1,0 +1,5 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Uncomment line below to enable commitlint
+# npx --no-install commitlint --edit "$1"
