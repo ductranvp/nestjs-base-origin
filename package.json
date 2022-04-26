@@ -32,6 +32,7 @@
     "@nestjs/typeorm": "^8.0.3",
     "@types/lodash": "^4.14.182",
     "cross-env": "^7.0.3",
+    "dayjs": "^1.11.1",
     "lodash": "^4.17.21",
     "mysql2": "^2.3.3",
     "nestjs-pino": "^2.5.2",
