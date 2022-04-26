@@ -4,8 +4,8 @@ import type { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { isNil } from 'lodash';
 
 import { SnakeNamingStrategy } from '../../snake-naming.strategy';
-import { EnvVariableConstants } from '../../constants/env-variable.constants';
-import { NodeEnvConstants } from '../../constants/node-env.constants';
+import { EnvVariableConstant } from '../../constants/env-variable.constant';
+import { NodeEnvConstant } from '../../constants/node-env.constant';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 
 @Injectable()
@@ -13,15 +13,15 @@ export class AppConfigService {
   constructor(private configService: ConfigService) {}
 
   get isDevelopment(): boolean {
-    return this.nodeEnv === NodeEnvConstants.DEVELOPMENT;
+    return this.nodeEnv === NodeEnvConstant.DEVELOPMENT;
   }
 
   get isStaging(): boolean {
-    return this.nodeEnv === NodeEnvConstants.STAGING;
+    return this.nodeEnv === NodeEnvConstant.STAGING;
   }
 
   get isProduction(): boolean {
-    return this.nodeEnv === NodeEnvConstants.PRODUCTION;
+    return this.nodeEnv === NodeEnvConstant.PRODUCTION;
   }
 
   private getNumber(key: string): number {
@@ -51,7 +51,7 @@ export class AppConfigService {
   }
 
   get nodeEnv(): string {
-    return this.getString(EnvVariableConstants.NODE_ENV);
+    return this.getString(EnvVariableConstant.NODE_ENV);
   }
 
   get typeOrmConfig(): TypeOrmModuleOptions {
@@ -62,12 +62,12 @@ export class AppConfigService {
       entities,
       migrations,
       keepConnectionAlive: true,
-      type: this.get(EnvVariableConstants.DB_TYPE) as any,
-      host: this.get(EnvVariableConstants.DB_HOST),
-      port: this.getNumber(EnvVariableConstants.DB_PORT),
-      username: this.get(EnvVariableConstants.DB_USERNAME),
-      password: this.get(EnvVariableConstants.DB_PASSWORD),
-      database: this.get(EnvVariableConstants.DB_DATABASE),
+      type: this.get(EnvVariableConstant.DB_TYPE) as any,
+      host: this.get(EnvVariableConstant.DB_HOST),
+      port: this.getNumber(EnvVariableConstant.DB_PORT),
+      username: this.get(EnvVariableConstant.DB_USERNAME),
+      password: this.get(EnvVariableConstant.DB_PASSWORD),
+      database: this.get(EnvVariableConstant.DB_DATABASE),
       subscribers: [],
       migrationsRun: true,
       synchronize: true,
@@ -78,7 +78,7 @@ export class AppConfigService {
 
   get corsConfig(): CorsOptions {
     const allowedOrigins = this.getString(
-      EnvVariableConstants.ALLOWED_ORIGINS,
+      EnvVariableConstant.ALLOWED_ORIGINS,
     ).split(';');
     return {
       origin: (origin, callback) => {
@@ -100,7 +100,7 @@ export class AppConfigService {
 
   get appConfig() {
     return {
-      port: this.getString(EnvVariableConstants.PORT),
+      port: this.getString(EnvVariableConstant.PORT),
     };
   }
 

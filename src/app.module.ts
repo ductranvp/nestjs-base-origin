@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { SharedModule } from './shared/shared.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppConfigService } from './shared/services/app-config.service';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AppConfigService } from './shared/services/app-config.service';
         configService.typeOrmConfig,
       inject: [AppConfigService],
     }),
+    UserModule,
   ],
   providers: [],
   exports: [],

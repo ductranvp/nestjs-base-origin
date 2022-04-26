@@ -1,4 +1,4 @@
-export enum EnvVariableConstants {
+export enum EnvVariableConstant {
   NODE_ENV = 'NODE_ENV',
   PORT = 'PORT',
   DB_TYPE = 'DB_TYPE',
