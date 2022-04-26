@@ -4,6 +4,8 @@ import { SharedModule } from './shared/shared.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppConfigService } from './shared/services/app-config.service';
 import { UserModule } from './modules/user/user.module';
+import { LoggerModule } from 'nestjs-pino';
+import { Params } from 'nestjs-pino/params';
 
 @Module({
   imports: [
@@ -17,6 +19,14 @@ import { UserModule } from './modules/user/user.module';
         configService.typeOrmConfig,
       inject: [AppConfigService],
     }),
+    LoggerModule.forRootAsync({
+      imports: [SharedModule],
+      inject: [AppConfigService],
+      useFactory: async (configService: AppConfigService): Promise<Params> => {
+        return configService.getLogConfig(configService);
+      },
+    }),
+
     UserModule,
   ],
   providers: [],

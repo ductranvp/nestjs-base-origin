@@ -7,6 +7,7 @@ import { SnakeNamingStrategy } from '../../snake-naming.strategy';
 import { EnvVariableConstant } from '../../constants/env-variable.constant';
 import { NodeEnvConstant } from '../../constants/node-env.constant';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
+import { Params } from 'nestjs-pino/params';
 
 @Injectable()
 export class AppConfigService {
@@ -116,5 +117,40 @@ export class AppConfigService {
 
   get documentationEnabled(): boolean {
     return this.getBoolean(EnvVariableConstant.ENABLE_DOCUMENTATION);
+  }
+
+  async getLogConfig(config: AppConfigService): Promise<Params> {
+    const optionsLogger: any = {
+      timestamp: true,
+      useLevelLabels: true,
+      level: 40,
+    };
+
+    if (config.isDevelopment) {
+      optionsLogger.prettyPrint = {
+        colorize: true,
+        levelFirst: true,
+        translateTime: 'dd/mm/yyyy, HH:MM:ss TT Z',
+      };
+      optionsLogger.transport = {
+        target: 'pino-pretty',
+      };
+      optionsLogger.level = 10;
+    }
+    return {
+      pinoHttp: {
+        ...optionsLogger,
+        customLogLevel: (res, err) => {
+          if (res.statusCode >= 400 && res.statusCode < 500) {
+            return 'warn';
+          } else if (res.statusCode >= 500 || err) {
+            return 'error';
+          } else if (res.statusCode >= 300 && res.statusCode < 400) {
+            return 'silent';
+          }
+          return 'info';
+        },
+      },
+    };
   }
 }
