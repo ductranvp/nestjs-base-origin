@@ -113,4 +113,8 @@ export class AppConfigService {
 
     return value;
   }
+
+  get documentationEnabled(): boolean {
+    return this.getBoolean(EnvVariableConstant.ENABLE_DOCUMENTATION);
+  }
 }
