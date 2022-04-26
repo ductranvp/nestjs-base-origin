@@ -1,23 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ConfigService } from '@nestjs/config';
-import { EnvVariableConstants } from './constants/env-variable.constants';
-import { corsConfig } from './config/cors.config';
-import { NodeEnvConstants } from './constants/node-env.constants';
+import { SharedModule } from './shared/shared.module';
+import { AppConfigService } from './shared/services/app-config.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const configService = app.get(ConfigService);
-
-  // CORS
-  const env = configService.get(EnvVariableConstants.NODE_ENV);
-  if (env === NodeEnvConstants.DEVELOPMENT) {
-    app.enableCors();
-  } else {
-    app.enableCors(corsConfig);
-  }
-
-  const port = configService.get(EnvVariableConstants.BACKEND_PORT);
+  const configService = app.select(SharedModule).get(AppConfigService);
+  app.enableCors(configService.corsConfig);
+  const port = configService.appConfig.port;
   await app.listen(port);
 }
 bootstrap();

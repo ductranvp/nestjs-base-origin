@@ -1,15 +1,23 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-
-const nodeEnv = process.env.NODE_ENV;
+import { ConfigModule } from '@nestjs/config';
+import { SharedModule } from './shared/shared.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { AppConfigService } from './shared/services/app-config.service';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: `.env.${nodeEnv}`,
+      isGlobal: true,
+      envFilePath: `.env.${process.env.NODE_ENV}`,
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [SharedModule],
+      useFactory: (configService: AppConfigService) =>
+        configService.typeOrmConfig,
+      inject: [AppConfigService],
     }),
   ],
-  providers: [ConfigService],
-  exports: [ConfigService],
+  providers: [],
+  exports: [],
 })
 export class AppModule {}
