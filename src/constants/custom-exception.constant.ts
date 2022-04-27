@@ -9,4 +9,8 @@ export const CustomExceptionConstant = {
     key: 'error.badRequest',
     statusCode: HttpStatus.BAD_REQUEST,
   },
+  UPLOAD_FAILED: {
+    key: 'error.uploadFile',
+    statusCode: HttpStatus.NOT_ACCEPTABLE,
+  },
 };

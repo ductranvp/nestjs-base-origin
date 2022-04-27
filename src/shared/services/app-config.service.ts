@@ -11,6 +11,7 @@ import { Params } from 'nestjs-pino/params';
 import { LogLevelConstant } from '../../constants/log-level.constant';
 import { Options } from 'pino-http';
 import { QueueOptions } from 'bull';
+import { IAwsConfig } from '../../interfaces/IAwsConfig';
 
 @Injectable()
 export class AppConfigService {
@@ -162,6 +163,17 @@ export class AppConfigService {
         host: this.getString(EnvVariableConstant.QUEUE_HOST),
         port: this.getNumber(EnvVariableConstant.QUEUE_PORT),
       },
+    };
+  }
+
+  get awsS3Config(): IAwsConfig {
+    return {
+      apiEndpoint: this.get(EnvVariableConstant.S3_ENDPOINT),
+      credentials: {
+        accessKeyId: this.get(EnvVariableConstant.S3_ACCESS_KEY),
+        secretAccessKey: this.get(EnvVariableConstant.S3_SECRET_KEY),
+      },
+      bucketName: this.get(EnvVariableConstant.S3_BUCKET_NAME),
     };
   }
 }

@@ -5,7 +5,7 @@ import { CustomException } from '../exceptions/custom.exception';
 
 const logger = new Logger('GlobalExceptionsFilter');
 
-@Catch(HttpException)
+@Catch()
 export class GlobalExceptionsFilter extends BaseExceptionFilter {
   catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();

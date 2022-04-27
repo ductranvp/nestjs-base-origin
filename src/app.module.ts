@@ -7,6 +7,7 @@ import { UserModule } from './modules/user/user.module';
 import { LoggerModule } from 'nestjs-pino';
 import { BullModule } from '@nestjs/bull';
 import { QueueModule } from './modules/queue/queue.module';
+import { MediaModule } from './modules/media/media.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { QueueModule } from './modules/queue/queue.module';
     }),
     UserModule,
     QueueModule,
+    MediaModule,
   ],
   providers: [],
   exports: [],
