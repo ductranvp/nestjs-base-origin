@@ -8,6 +8,9 @@ import { EnvVariableConstant } from '../../constants/env-variable.constant';
 import { NodeEnvConstant } from '../../constants/node-env.constant';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { Params } from 'nestjs-pino/params';
+import { LogLevelConstant } from '../../constants/log-level.constant';
+import { Options } from 'pino-http';
+import { QueueOptions } from 'bull';
 
 @Injectable()
 export class AppConfigService {
@@ -119,14 +122,13 @@ export class AppConfigService {
     return this.getBoolean(EnvVariableConstant.ENABLE_DOCUMENTATION);
   }
 
-  async getLogConfig(config: AppConfigService): Promise<Params> {
-    const optionsLogger: any = {
+  get loggerConfig(): Params {
+    const optionsLogger: Options = {
       timestamp: true,
-      useLevelLabels: true,
-      level: 40,
+      level: LogLevelConstant.warn,
     };
 
-    if (config.isDevelopment) {
+    if (this.isDevelopment) {
       optionsLogger.prettyPrint = {
         colorize: true,
         levelFirst: true,
@@ -135,21 +137,30 @@ export class AppConfigService {
       optionsLogger.transport = {
         target: 'pino-pretty',
       };
-      optionsLogger.level = 10;
+      optionsLogger.level = LogLevelConstant.trace;
     }
     return {
       pinoHttp: {
         ...optionsLogger,
         customLogLevel: (res, err) => {
           if (res.statusCode >= 400 && res.statusCode < 500) {
-            return 'warn';
+            return LogLevelConstant.warn;
           } else if (res.statusCode >= 500 || err) {
-            return 'error';
+            return LogLevelConstant.error;
           } else if (res.statusCode >= 300 && res.statusCode < 400) {
-            return 'silent';
+            return LogLevelConstant.silent;
           }
-          return 'info';
+          return LogLevelConstant.info;
         },
+      },
+    };
+  }
+
+  get queueConfig(): QueueOptions {
+    return {
+      redis: {
+        host: this.getString(EnvVariableConstant.QUEUE_HOST),
+        port: this.getNumber(EnvVariableConstant.QUEUE_PORT),
       },
     };
   }

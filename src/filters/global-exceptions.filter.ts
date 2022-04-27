@@ -3,10 +3,10 @@ import { Catch, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
 import { CustomException } from '../exceptions/custom.exception';
 
-const logger = new Logger('GLOBAL_EXCEPTION');
+const logger = new Logger('GlobalExceptionsFilter');
 
 @Catch(HttpException)
-export class AllExceptionsFilter extends BaseExceptionFilter {
+export class GlobalExceptionsFilter extends BaseExceptionFilter {
   catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();

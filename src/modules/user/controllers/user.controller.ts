@@ -7,11 +7,11 @@ export class UserController {
 
   @Get()
   getUsers() {
-    return 'All Users';
+    return this.userService.getUsers();
   }
 
   @Get(':id')
   getUser(@Param('id') id: string) {
-    return `Get user with id: ${id}`;
+    return this.userService.getUser(id);
   }
 }

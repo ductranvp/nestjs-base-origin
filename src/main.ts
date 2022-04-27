@@ -4,7 +4,7 @@ import { SharedModule } from './shared/shared.module';
 import { AppConfigService } from './shared/services/app-config.service';
 import { setupSwagger } from './setup-swagger';
 import { Logger } from 'nestjs-pino';
-import { AllExceptionsFilter } from './filters/all-exceptions.filter';
+import { GlobalExceptionsFilter } from './filters/global-exceptions.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
@@ -14,7 +14,7 @@ async function bootstrap() {
 
   // filter
   const { httpAdapter } = app.get(HttpAdapterHost);
-  app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
+  app.useGlobalFilters(new GlobalExceptionsFilter(httpAdapter));
 
   // cors
   app.enableCors(configService.corsConfig);

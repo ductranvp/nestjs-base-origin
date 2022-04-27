@@ -5,7 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppConfigService } from './shared/services/app-config.service';
 import { UserModule } from './modules/user/user.module';
 import { LoggerModule } from 'nestjs-pino';
-import { Params } from 'nestjs-pino/params';
+import { BullModule } from '@nestjs/bull';
+import { QueueModule } from './modules/queue/queue.module';
 
 @Module({
   imports: [
@@ -22,12 +23,17 @@ import { Params } from 'nestjs-pino/params';
     LoggerModule.forRootAsync({
       imports: [SharedModule],
       inject: [AppConfigService],
-      useFactory: async (configService: AppConfigService): Promise<Params> => {
-        return configService.getLogConfig(configService);
-      },
+      useFactory: (configService: AppConfigService) =>
+        configService.loggerConfig,
     }),
-
+    BullModule.forRootAsync({
+      imports: [SharedModule],
+      inject: [AppConfigService],
+      useFactory: (configService: AppConfigService) =>
+        configService.queueConfig,
+    }),
     UserModule,
+    QueueModule,
   ],
   providers: [],
   exports: [],
