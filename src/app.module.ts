@@ -8,6 +8,9 @@ import { LoggerModule } from 'nestjs-pino';
 import { BullModule } from '@nestjs/bull';
 import { QueueModule } from './modules/queue/queue.module';
 import { MediaModule } from './modules/media/media.module';
+import { I18nModule } from 'nestjs-i18n';
+import { GlobalExceptionsFilter } from './filters/global-exceptions.filter';
+import { APP_FILTER } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -33,11 +36,22 @@ import { MediaModule } from './modules/media/media.module';
       useFactory: (configService: AppConfigService) =>
         configService.queueConfig,
     }),
+    I18nModule.forRootAsync({
+      imports: [SharedModule],
+      inject: [AppConfigService],
+      useFactory: (configService: AppConfigService) =>
+        configService.getLanguageConfig,
+    }),
     UserModule,
     QueueModule,
     MediaModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: GlobalExceptionsFilter,
+    },
+  ],
   exports: [],
 })
 export class AppModule {}

@@ -37,6 +37,7 @@
     "lodash": "^4.17.21",
     "mime-types": "^2.1.35",
     "mysql2": "^2.3.3",
+    "nestjs-i18n": "^9.0.10",
     "nestjs-pino": "^2.5.2",
     "pg": "^8.7.3",
     "pino-http": "^6.6.0",

@@ -1,12 +1,14 @@
-import type { ArgumentsHost } from '@nestjs/common';
+import type { ArgumentsHost, ExceptionFilter } from '@nestjs/common';
 import { Catch, HttpException, HttpStatus, Logger } from '@nestjs/common';
-import { BaseExceptionFilter } from '@nestjs/core';
 import { CustomException } from '../exceptions/custom.exception';
+import { HttpAdapterHost } from '@nestjs/core';
 
 const logger = new Logger('GlobalExceptionsFilter');
 
 @Catch()
-export class GlobalExceptionsFilter extends BaseExceptionFilter {
+export class GlobalExceptionsFilter implements ExceptionFilter {
+  constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
+
   catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();

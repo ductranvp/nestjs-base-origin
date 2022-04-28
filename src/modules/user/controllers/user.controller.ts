@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -8,8 +8,8 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get()
-  getUsers() {
-    return this.userService.getUsers();
+  getUsers(@Query('lang') lang: string) {
+    return this.userService.getUsers(lang);
   }
 
   @Get(':id')

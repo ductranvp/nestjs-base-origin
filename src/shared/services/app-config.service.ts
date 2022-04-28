@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { isNil } from 'lodash';
-
 import { SnakeNamingStrategy } from '../../snake-naming.strategy';
 import { EnvVariableConstant } from '../../constants/env-variable.constant';
 import { NodeEnvConstant } from '../../constants/node-env.constant';
@@ -12,6 +11,10 @@ import { LogLevelConstant } from '../../constants/log-level.constant';
 import { Options } from 'pino-http';
 import { QueueOptions } from 'bull';
 import { IAwsConfig } from '../../interfaces/IAwsConfig';
+import { I18nOptions } from 'nestjs-i18n/dist/interfaces/i18n-options.interface';
+import * as path from 'path';
+import { LanguageConstant } from '../../constants/language.constant';
+import { AcceptLanguageResolver, QueryResolver } from 'nestjs-i18n';
 
 @Injectable()
 export class AppConfigService {
@@ -174,6 +177,20 @@ export class AppConfigService {
         secretAccessKey: this.get(EnvVariableConstant.S3_SECRET_KEY),
       },
       bucketName: this.get(EnvVariableConstant.S3_BUCKET_NAME),
+    };
+  }
+
+  get getLanguageConfig(): I18nOptions {
+    return {
+      fallbackLanguage: LanguageConstant.en,
+      loaderOptions: {
+        path: path.join(__dirname, '/../../i18n/'),
+        watch: true,
+      },
+      resolvers: [
+        { use: QueryResolver, options: ['lang'] },
+        AcceptLanguageResolver,
+      ],
     };
   }
 }
