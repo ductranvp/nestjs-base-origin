@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AwsS3Service } from './aws-s3.service';
-import { getFileExtension, uuid } from '../../utils/app.util';
+import { getFileExtension, uuid } from '../../utils/common.util';
 import { IFile } from '../../interfaces/IFile';
 import { AppConfigService } from './app-config.service';
 

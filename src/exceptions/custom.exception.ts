@@ -1,10 +1,6 @@
 'use strict';
 
-export interface ICustomException {
-  key: string; // i18n key
-  statusCode: number;
-  timestamp?: Date;
-}
+import { ICustomException } from '../interfaces';
 
 export class CustomException extends Error {
   error: ICustomException;

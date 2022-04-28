@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SharedModule } from './shared/shared.module';
 import { AppConfigService } from './shared/services/app-config.service';
-import { setupSwagger } from './setup-swagger';
+import { setupSwagger } from './shared/setup-swagger';
 import { Logger } from 'nestjs-pino';
 
 async function bootstrap() {

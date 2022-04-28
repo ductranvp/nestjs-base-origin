@@ -8,7 +8,7 @@ import { MediaService } from '../services/media.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FileUploadDto } from '../dtos/file-upload.dto';
-import { IFile } from '../../../interfaces/IFile';
+import { IFile } from '../../../interfaces';
 
 @ApiTags('media')
 @Controller('media')

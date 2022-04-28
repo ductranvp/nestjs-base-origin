@@ -1,5 +1,5 @@
-import { AbstractDto } from '../../../common/dtos/abstract.dto';
-import { RoleType } from '../../../constants/role-type.constant';
+import { AbstractDto } from '../../../shared/abstract.dto';
+import { RoleConstant } from '../../../constants';
 import { UserEntity } from '../entities/user.entity';
 
 export class UserDto extends AbstractDto {
@@ -7,7 +7,7 @@ export class UserDto extends AbstractDto {
 
   lastName?: string;
 
-  role?: RoleType;
+  role?: RoleConstant;
 
   email?: string;
 

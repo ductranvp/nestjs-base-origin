@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bull';
-import { QueueNameConstant } from '../../constants/queue.constant';
+import { QueueNameConstant, QueueProcessConstant } from '../../constants';
 import { Queue } from 'bull';
-import { UserQueueProcess } from './queue-process-name';
 
 @Injectable()
 export class QueueService {
@@ -11,7 +10,7 @@ export class QueueService {
   ) {}
 
   async handleAction(data) {
-    await this.userQueue.add(UserQueueProcess.GET_USERS, data, {
+    await this.userQueue.add(QueueProcessConstant.GET_USERS, data, {
       attempts: 5,
     });
   }

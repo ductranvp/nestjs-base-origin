@@ -1,6 +1,6 @@
 import { Column, Entity } from 'typeorm';
-import { AbstractEntity } from '../../../common/abstract.entity';
-import { RoleType } from '../../../constants/role-type.constant';
+import { AbstractEntity } from '../../../shared/abstract.entity';
+import { RoleConstant } from '../../../constants';
 
 @Entity()
 export class UserEntity extends AbstractEntity {
@@ -10,8 +10,8 @@ export class UserEntity extends AbstractEntity {
   @Column({ nullable: true })
   lastName?: string;
 
-  @Column({ type: 'enum', enum: RoleType, default: RoleType.USER })
-  role?: RoleType;
+  @Column({ type: 'enum', enum: RoleConstant, default: RoleConstant.USER })
+  role?: RoleConstant;
 
   @Column({ unique: true, nullable: true })
   email?: string;

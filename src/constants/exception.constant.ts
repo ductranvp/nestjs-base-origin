@@ -1,6 +1,8 @@
+'use strict';
+
 import { HttpStatus } from '@nestjs/common';
 
-export const CustomExceptionConstant = {
+export const ExceptionConstant = {
   NOT_FOUND: {
     key: 'error.notFound',
     statusCode: HttpStatus.NOT_FOUND,

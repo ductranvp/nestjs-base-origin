@@ -9,7 +9,7 @@ import { BullModule } from '@nestjs/bull';
 import { QueueModule } from './modules/queue/queue.module';
 import { MediaModule } from './modules/media/media.module';
 import { I18nModule } from 'nestjs-i18n';
-import { GlobalExceptionsFilter } from './filters/global-exceptions.filter';
+import { AllExceptionsFilter } from './filters';
 import { APP_FILTER } from '@nestjs/core';
 
 @Module({
@@ -49,7 +49,7 @@ import { APP_FILTER } from '@nestjs/core';
   providers: [
     {
       provide: APP_FILTER,
-      useClass: GlobalExceptionsFilter,
+      useClass: AllExceptionsFilter,
     },
   ],
   exports: [],

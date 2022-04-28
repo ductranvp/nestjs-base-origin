@@ -2,19 +2,19 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { isNil } from 'lodash';
-import { SnakeNamingStrategy } from '../../snake-naming.strategy';
-import { EnvVariableConstant } from '../../constants/env-variable.constant';
-import { NodeEnvConstant } from '../../constants/node-env.constant';
+import { SnakeNamingStrategy } from '../snake-naming.strategy';
+import { EnvConstant, LogLevelConstant } from '../../constants';
+import { NodeEnvConstant } from '../../constants';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { Params } from 'nestjs-pino/params';
-import { LogLevelConstant } from '../../constants/log-level.constant';
 import { Options } from 'pino-http';
 import { QueueOptions } from 'bull';
-import { IAwsConfig } from '../../interfaces/IAwsConfig';
+import { IAwsConfig } from '../../interfaces';
 import { I18nOptions } from 'nestjs-i18n/dist/interfaces/i18n-options.interface';
 import * as path from 'path';
-import { LanguageConstant } from '../../constants/language.constant';
+import { LanguageConstant } from '../../constants';
 import { AcceptLanguageResolver, QueryResolver } from 'nestjs-i18n';
+import { UserSubscriber } from '../../entity-subscribers';
 
 @Injectable()
 export class AppConfigService {
@@ -59,7 +59,7 @@ export class AppConfigService {
   }
 
   get nodeEnv(): string {
-    return this.getString(EnvVariableConstant.NODE_ENV);
+    return this.getString(EnvConstant.NODE_ENV);
   }
 
   get typeOrmConfig(): TypeOrmModuleOptions {
@@ -70,13 +70,13 @@ export class AppConfigService {
       entities,
       migrations,
       keepConnectionAlive: true,
-      type: this.get(EnvVariableConstant.DB_TYPE) as any,
-      host: this.get(EnvVariableConstant.DB_HOST),
-      port: this.getNumber(EnvVariableConstant.DB_PORT),
-      username: this.get(EnvVariableConstant.DB_USERNAME),
-      password: this.get(EnvVariableConstant.DB_PASSWORD),
-      database: this.get(EnvVariableConstant.DB_DATABASE),
-      subscribers: [],
+      type: this.get(EnvConstant.DB_TYPE) as any,
+      host: this.get(EnvConstant.DB_HOST),
+      port: this.getNumber(EnvConstant.DB_PORT),
+      username: this.get(EnvConstant.DB_USERNAME),
+      password: this.get(EnvConstant.DB_PASSWORD),
+      database: this.get(EnvConstant.DB_DATABASE),
+      subscribers: [UserSubscriber],
       migrationsRun: true,
       synchronize: true,
       logging: 'all',
@@ -85,9 +85,9 @@ export class AppConfigService {
   }
 
   get corsConfig(): CorsOptions {
-    const allowedOrigins = this.getString(
-      EnvVariableConstant.ALLOWED_ORIGINS,
-    ).split(';');
+    const allowedOrigins = this.getString(EnvConstant.ALLOWED_ORIGINS).split(
+      ';',
+    );
     return {
       origin: (origin, callback) => {
         if (
@@ -108,7 +108,7 @@ export class AppConfigService {
 
   get appConfig() {
     return {
-      port: this.getString(EnvVariableConstant.PORT),
+      port: this.getString(EnvConstant.PORT),
     };
   }
 
@@ -123,7 +123,7 @@ export class AppConfigService {
   }
 
   get documentationEnabled(): boolean {
-    return this.getBoolean(EnvVariableConstant.ENABLE_DOCUMENTATION);
+    return this.getBoolean(EnvConstant.ENABLE_DOCUMENTATION);
   }
 
   get loggerConfig(): Params {
@@ -163,20 +163,20 @@ export class AppConfigService {
   get queueConfig(): QueueOptions {
     return {
       redis: {
-        host: this.getString(EnvVariableConstant.QUEUE_HOST),
-        port: this.getNumber(EnvVariableConstant.QUEUE_PORT),
+        host: this.getString(EnvConstant.QUEUE_HOST),
+        port: this.getNumber(EnvConstant.QUEUE_PORT),
       },
     };
   }
 
   get awsS3Config(): IAwsConfig {
     return {
-      apiEndpoint: this.get(EnvVariableConstant.S3_ENDPOINT),
+      apiEndpoint: this.get(EnvConstant.S3_ENDPOINT),
       credentials: {
-        accessKeyId: this.get(EnvVariableConstant.S3_ACCESS_KEY),
-        secretAccessKey: this.get(EnvVariableConstant.S3_SECRET_KEY),
+        accessKeyId: this.get(EnvConstant.S3_ACCESS_KEY),
+        secretAccessKey: this.get(EnvConstant.S3_SECRET_KEY),
       },
-      bucketName: this.get(EnvVariableConstant.S3_BUCKET_NAME),
+      bucketName: this.get(EnvConstant.S3_BUCKET_NAME),
     };
   }
 

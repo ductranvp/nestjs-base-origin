@@ -1,6 +1,6 @@
 'use strict';
 
-export enum RoleType {
+export enum RoleConstant {
   USER = 'USER',
   ADMIN = 'ADMIN',
 }

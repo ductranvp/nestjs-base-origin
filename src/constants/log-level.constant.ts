@@ -1,3 +1,5 @@
+'use strict';
+
 export enum LogLevelConstant {
   silent = 'silent', // Infinity
   trace = 'trace', // 10
