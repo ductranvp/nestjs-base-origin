@@ -1,6 +1,6 @@
 import { Column, Entity } from 'typeorm';
 import { AbstractEntity } from '../../../shared/abstract.entity';
-import { IFile } from '../../../interfaces';
+import { IFile } from '../../../shared/interfaces';
 
 @Entity()
 export class MediaEntity extends AbstractEntity implements IFile {

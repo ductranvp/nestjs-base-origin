@@ -1,6 +1,6 @@
 'use strict';
 
-import { ICustomException } from '../interfaces';
+import { ICustomException } from '../shared/interfaces';
 
 export class CustomException extends Error {
   error: ICustomException;

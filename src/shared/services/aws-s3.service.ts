@@ -2,8 +2,7 @@ import { Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
 import { S3 } from 'aws-sdk';
 
 import { AppConfigService } from './app-config.service';
-import { IFile } from '../../interfaces/IFile';
-import { IAwsConfig } from '../../interfaces/IAwsConfig';
+import { IAwsConfig, IFile } from '../interfaces';
 
 @Injectable()
 export class AwsS3Service implements OnApplicationBootstrap {

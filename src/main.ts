@@ -4,10 +4,16 @@ import { SharedModule } from './shared/shared.module';
 import { AppConfigService } from './shared/services/app-config.service';
 import { setupSwagger } from './shared/setup-swagger';
 import { Logger } from 'nestjs-pino';
+import { middleware as expressCtx } from 'express-ctx';
+import compression from 'compression';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
   const configService = app.select(SharedModule).get(AppConfigService);
+
+  app.use(expressCtx);
+  app.use(compression());
+
   // logger
   app.useLogger(app.get(Logger));
 

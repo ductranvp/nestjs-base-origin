@@ -1,6 +1,6 @@
 import { getValue, setValue } from 'express-ctx';
-import { UserEntity } from '../modules/user/entities/user.entity';
-import { LanguageConstant } from '../constants/language.constant';
+import { UserEntity } from '../../modules/user/entities/user.entity';
+import { LanguageConstant } from '../../constants';
 
 export class ContextProvider {
   private static readonly nameSpace = 'request';

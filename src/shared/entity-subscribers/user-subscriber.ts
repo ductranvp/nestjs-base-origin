@@ -5,7 +5,7 @@ import type {
 } from 'typeorm';
 import { EventSubscriber } from 'typeorm';
 
-import { UserEntity } from '../modules/user/entities/user.entity';
+import { UserEntity } from '../../modules/user/entities/user.entity';
 import { generateHash } from '../utils';
 
 @EventSubscriber()

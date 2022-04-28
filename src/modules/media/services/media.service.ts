@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IFile } from '../../../interfaces';
+import { IFile } from '../../../shared/interfaces';
 import { FileService } from '../../../shared/services/file.service';
 import { MediaRepository } from '../repositories/media.repository';
 import { MediaEntity } from '../entities/media.entity';
