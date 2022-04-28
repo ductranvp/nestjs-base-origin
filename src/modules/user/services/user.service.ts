@@ -1,10 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { UserRepository } from '../repositories/user.repository';
 import { QueueService } from '../../queue/queue.service';
 import { I18nService } from 'nestjs-i18n';
+import { Cron } from '@nestjs/schedule';
 
 @Injectable()
 export class UserService {
+  private readonly logger = new Logger(UserService.name);
+
   constructor(
     private userRepository: UserRepository,
     private queueService: QueueService,
@@ -20,5 +23,10 @@ export class UserService {
 
   getUser(id: string) {
     return `Get user with id: ${id}`;
+  }
+
+  @Cron('45 * * * * *')
+  handleCron() {
+    this.logger.debug('Called when the current second is 45');
   }
 }

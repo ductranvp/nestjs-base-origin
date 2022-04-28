@@ -11,6 +11,7 @@ import { MediaModule } from './modules/media/media.module';
 import { I18nModule } from 'nestjs-i18n';
 import { AllExceptionsFilter } from './filters';
 import { APP_FILTER } from '@nestjs/core';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { APP_FILTER } from '@nestjs/core';
       useFactory: (configService: AppConfigService) =>
         configService.getLanguageConfig,
     }),
+    ScheduleModule.forRoot(),
     UserModule,
     QueueModule,
     MediaModule,
