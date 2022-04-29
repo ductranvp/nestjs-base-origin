@@ -1,6 +1,6 @@
 'use strict';
 
 export enum QueueProcessConstant {
-  GET_USERS = 'GET_USERS',
+  DO_SOMETHING = 'DO_SOMETHING',
   SEND_NOTIFICATION = 'SEND_NOTIFICATION',
 }

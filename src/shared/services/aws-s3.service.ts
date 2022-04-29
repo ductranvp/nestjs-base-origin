@@ -1,8 +1,9 @@
 import { Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
 import { S3 } from 'aws-sdk';
 
-import { AppConfigService } from './app-config.service';
 import { IAwsConfig, IFile } from '../interfaces';
+import { ConfigService } from '@nestjs/config';
+import { ConfigConstant } from '../../constants';
 
 @Injectable()
 export class AwsS3Service implements OnApplicationBootstrap {
@@ -10,8 +11,8 @@ export class AwsS3Service implements OnApplicationBootstrap {
   private readonly logger = new Logger(AwsS3Service.name);
   private s3Config: IAwsConfig;
 
-  constructor(public configService: AppConfigService) {
-    const awsS3Config = configService.awsS3Config;
+  constructor(public configService: ConfigService) {
+    const awsS3Config = configService.get(ConfigConstant.AWS_S3) as IAwsConfig;
     const options: S3.Types.ClientConfiguration = {
       sslEnabled: false,
       s3ForcePathStyle: true, // needed with minio?

@@ -1,15 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { SharedModule } from './shared/shared.module';
-import { AppConfigService } from './shared/services/app-config.service';
 import { setupSwagger } from './shared/setup-swagger';
 import { Logger } from 'nestjs-pino';
 import { middleware as expressCtx } from 'express-ctx';
 import * as compression from 'compression';
+import { ConfigService } from '@nestjs/config';
+import { ConfigConstant } from './constants';
+import { getBoolean, getNumber } from './shared/utils';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
-  const configService = app.select(SharedModule).get(AppConfigService);
+  const configService = app.get(ConfigService);
 
   app.use(expressCtx);
   app.use(compression());
@@ -18,14 +19,14 @@ async function bootstrap() {
   app.useLogger(app.get(Logger));
 
   // cors
-  app.enableCors(configService.corsConfig);
+  app.enableCors(configService.get(ConfigConstant.CORS));
 
   // document
-  if (configService.documentationEnabled) {
+  if (getBoolean(process.env.ENABLE_DOCUMENTATION)) {
     setupSwagger(app);
   }
 
-  const port = configService.appConfig.port;
+  const port = getNumber(process.env.PORT);
   await app.listen(port);
   console.info(`Server is running on port ${port}`);
   return app;

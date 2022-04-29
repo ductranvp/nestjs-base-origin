@@ -1,10 +1,8 @@
 import { Global, Module } from '@nestjs/common';
 
-import { AppConfigService } from './services/app-config.service';
-import { AwsS3Service } from './services/aws-s3.service';
-import { FileService } from './services/file.service';
+import { AwsS3Service, FileService } from './services';
 
-const services = [AppConfigService, AwsS3Service, FileService];
+const services = [AwsS3Service, FileService];
 
 @Global()
 @Module({

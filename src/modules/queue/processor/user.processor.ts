@@ -7,10 +7,11 @@ import { QueueNameConstant, QueueProcessConstant } from '../../../constants';
 export class UserProcessor {
   private readonly logger = new Logger(UserProcessor.name);
 
-  @Process(QueueProcessConstant.GET_USERS)
+  @Process(QueueProcessConstant.DO_SOMETHING)
   async progress(job: Job, cb: DoneCallback) {
     try {
       const data = job.data;
+      this.logger.log('Queue is processing data');
       this.logger.log(data);
       cb(null);
     } catch (e) {

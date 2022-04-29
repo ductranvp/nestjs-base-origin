@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SharedModule } from './shared/shared.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppConfigService } from './shared/services/app-config.service';
 import { UserModule } from './modules/user/user.module';
 import { LoggerModule } from 'nestjs-pino';
 import { BullModule } from '@nestjs/bull';
@@ -12,36 +11,50 @@ import { I18nModule } from 'nestjs-i18n';
 import { AllExceptionsFilter } from './filters';
 import { APP_FILTER } from '@nestjs/core';
 import { ScheduleModule } from '@nestjs/schedule';
+import { ConfigConstant } from './constants';
+import {
+  awsS3Config,
+  corsConfig,
+  databaseConfig,
+  languageConfig,
+  loggerConfig,
+  queueConfig,
+} from './shared/configs';
 
 @Module({
   imports: [
+    SharedModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
+      load: [
+        databaseConfig,
+        corsConfig,
+        languageConfig,
+        loggerConfig,
+        awsS3Config,
+        queueConfig,
+      ],
     }),
     TypeOrmModule.forRootAsync({
-      imports: [SharedModule],
-      useFactory: (configService: AppConfigService) =>
-        configService.typeOrmConfig,
-      inject: [AppConfigService],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) =>
+        configService.get(ConfigConstant.DATABASE),
     }),
     LoggerModule.forRootAsync({
-      imports: [SharedModule],
-      inject: [AppConfigService],
-      useFactory: (configService: AppConfigService) =>
-        configService.loggerConfig,
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) =>
+        configService.get(ConfigConstant.LOGGER),
     }),
     BullModule.forRootAsync({
-      imports: [SharedModule],
-      inject: [AppConfigService],
-      useFactory: (configService: AppConfigService) =>
-        configService.queueConfig,
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) =>
+        configService.get(ConfigConstant.QUEUE),
     }),
     I18nModule.forRootAsync({
-      imports: [SharedModule],
-      inject: [AppConfigService],
-      useFactory: (configService: AppConfigService) =>
-        configService.getLanguageConfig,
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) =>
+        configService.get(ConfigConstant.LANGUAGE),
     }),
     ScheduleModule.forRoot(),
     UserModule,

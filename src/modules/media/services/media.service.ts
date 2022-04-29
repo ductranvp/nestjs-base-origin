@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { IFile } from '../../../shared/interfaces';
-import { FileService } from '../../../shared/services/file.service';
+import { FileService } from '../../../shared/services';
 import { MediaRepository } from '../repositories/media.repository';
 import { MediaEntity } from '../entities/media.entity';
 import { CustomException } from '../../../exceptions';

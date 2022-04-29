@@ -9,8 +9,8 @@ export class QueueService {
     @InjectQueue(QueueNameConstant.USER) private readonly userQueue: Queue,
   ) {}
 
-  async handleAction(data) {
-    await this.userQueue.add(QueueProcessConstant.GET_USERS, data, {
+  async doSomething(data) {
+    await this.userQueue.add(QueueProcessConstant.DO_SOMETHING, data, {
       attempts: 5,
     });
   }

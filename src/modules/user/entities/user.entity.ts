@@ -10,7 +10,12 @@ export class UserEntity extends AbstractEntity {
   @Column({ nullable: true })
   lastName?: string;
 
-  @Column({ type: 'enum', enum: RoleConstant, default: RoleConstant.USER })
+  @Column({
+    type: 'enum',
+    enum: RoleConstant,
+    default: RoleConstant.USER,
+    nullable: true,
+  })
   role?: RoleConstant;
 
   @Column({ unique: true, nullable: true })
