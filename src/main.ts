@@ -7,6 +7,9 @@ import * as compression from 'compression';
 import { ConfigService } from '@nestjs/config';
 import { ConfigConstant } from './constants';
 import { getBoolean, getNumber } from './shared/utils';
+import { QueueModule } from './modules/queue/queue.module';
+import { QueueUiService } from './modules/queue/queue-ui.service';
+import * as expressBasicAuth from 'express-basic-auth';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
@@ -26,9 +29,26 @@ async function bootstrap() {
     setupSwagger(app);
   }
 
+  // queue ui
+  const queueUiService = app.select(QueueModule).get(QueueUiService);
+  app.use(
+    process.env.BULL_BOARD_ADMIN_ROUTE,
+    expressBasicAuth({
+      users: {
+        [process.env.BULL_BOARD_ADMIN_USERNAME]:
+          process.env.BULL_BOARD_ADMIN_PASSWORD,
+      },
+      challenge: true,
+    }),
+    queueUiService.getRouter,
+  );
+
   const port = getNumber(process.env.PORT);
   await app.listen(port);
 
+  console.info(
+    `Queue ui: http://localhost:${port}` + process.env.BULL_BOARD_ADMIN_ROUTE,
+  );
   console.info(`Server is running on: http://localhost:${port}`);
   return app;
 }

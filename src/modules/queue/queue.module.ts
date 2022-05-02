@@ -3,6 +3,7 @@ import { BullModule } from '@nestjs/bull';
 import { QueueNameConstant } from '../../constants';
 import { QueueService } from './queue.service';
 import { UserProcessor } from './processor/user.processor';
+import { QueueUiService } from './queue-ui.service';
 
 @Module({
   imports: [
@@ -10,7 +11,7 @@ import { UserProcessor } from './processor/user.processor';
       name: QueueNameConstant.USER,
     }),
   ],
-  providers: [QueueService, UserProcessor],
-  exports: [QueueService],
+  providers: [QueueService, QueueUiService, UserProcessor],
+  exports: [QueueService, QueueUiService],
 })
 export class QueueModule {}
