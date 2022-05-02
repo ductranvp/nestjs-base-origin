@@ -11,25 +11,30 @@ Create ".env.${mode}" file based on ".env.example"
 Eg: ".env.development"
 ```
 
+## Running the components
+```bash
+docker-compose up
+```
+
 ## Running the app
 
 ```bash
 # development
-$ yarn dev
+yarn dev
 
 # production
-$ yarn prod
+yarn prod
 ```
 
 ## Test
 
 ```bash
 # unit tests
-$ yarn test
+yarn test
 
 # e2e tests
-$ yarn test:e2e
+yarn test:e2e
 
 # test coverage
-$ yarn test:cov
+yarn test:cov
 ```

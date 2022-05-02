@@ -2,7 +2,7 @@ import { UserSubscriber } from '../entity-subscribers';
 import { getNumber, SnakeNamingStrategy } from '../utils';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { registerAs } from '@nestjs/config';
-import { ConfigConstant } from '../../constants';
+import { ConfigConstant, NodeEnvConstant } from '../../constants';
 
 export default registerAs(ConfigConstant.DATABASE, (): TypeOrmModuleOptions => {
   const entities = [__dirname + '/../../modules/**/*.entity{.ts,.js}'];
@@ -20,7 +20,7 @@ export default registerAs(ConfigConstant.DATABASE, (): TypeOrmModuleOptions => {
     keepConnectionAlive: true,
     subscribers: [UserSubscriber],
     migrationsRun: true,
-    synchronize: true,
+    synchronize: process.env.NODE_ENV === NodeEnvConstant.DEVELOPMENT,
     logging: 'all',
     namingStrategy: new SnakeNamingStrategy(),
   };
