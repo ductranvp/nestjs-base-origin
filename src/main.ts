@@ -8,8 +8,8 @@ import { ConfigService } from '@nestjs/config';
 import { ConfigConstant } from './constants';
 import { getBoolean, getNumber } from './shared/utils';
 import { QueueModule } from './modules/queue/queue.module';
-import { QueueUiService } from './modules/queue/queue-ui.service';
 import * as expressBasicAuth from 'express-basic-auth';
+import { QueueService } from './modules/queue/queue.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
@@ -30,7 +30,7 @@ async function bootstrap() {
   }
 
   // queue ui
-  const queueUiService = app.select(QueueModule).get(QueueUiService);
+  const queueUiService = app.select(QueueModule).get(QueueService);
   app.use(
     process.env.BULL_BOARD_ADMIN_ROUTE,
     expressBasicAuth({

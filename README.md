@@ -7,13 +7,18 @@ yarn install
 ## Environment
 
 ```bash
-Create ".env.${mode}" file based on ".env.example"
-Eg: ".env.development"
+Create new file ".env.development" based on ".env.example" 
+and update variables or leave them to default
 ```
 
-## Running the components
+## Components
 ```bash
+Create new file "docker-compose.yml" based on "docker-compose.example.yml"
+and update variables or leave them to default
+
+# run the components
 docker-compose up
+
 ```
 
 ## Running the app
