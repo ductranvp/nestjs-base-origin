@@ -10,10 +10,6 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
-    "start:dev": "nest start --watch",
-    "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -21,7 +17,10 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "dev": "rimraf dist && cross-env NODE_ENV=development nest start --watch",
-    "prod": "rimraf dist && nest build && cross-env NODE_ENV=production node dist/main"
+    "debug": "rimraf dist && cross-env NODE_ENV=development nest start --debug --watch",
+    "prod": "rimraf dist && nest build && cross-env NODE_ENV=production node dist/main",
+    "seed:config": "cross-env NODE_ENV=development ts-node node_modules/typeorm-seeding/dist/cli.js config",
+    "seed:run": "cross-env NODE_ENV=development ts-node node_modules/typeorm-seeding/dist/cli.js seed"
   },
   "dependencies": {
     "@nestjs/bull": "^0.5.4",
@@ -41,6 +40,8 @@
     "compression": "^1.7.4",
     "cross-env": "^7.0.3",
     "dayjs": "^1.11.1",
+    "dotenv": "^16.0.0",
+    "dotenv-cli": "^5.1.0",
     "express-basic-auth": "^1.2.1",
     "express-ctx": "^0.1.1",
     "lodash": "^4.17.21",
@@ -55,11 +56,13 @@
     "rxjs": "^7.2.0",
     "swagger-ui-express": "^4.3.0",
     "typeorm": "0.2",
+    "typeorm-seeding": "^1.6.1",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
+    "@faker-js/faker": "^6.3.1",
     "@nestjs/cli": "^8.0.0",
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.0.0",
