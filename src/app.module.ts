@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { SharedModule } from './shared/shared.module';
+import { SharedModule } from './modules/shared/shared.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './modules/user/user.module';
 import { LoggerModule } from 'nestjs-pino';
@@ -19,7 +19,7 @@ import {
   languageConfig,
   loggerConfig,
   queueConfig,
-} from './shared/configs';
+} from './configs';
 
 @Module({
   imports: [

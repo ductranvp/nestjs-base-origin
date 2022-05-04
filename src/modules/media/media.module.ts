@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { MediaRepository } from './repositories/media.repository';
-import { MediaService } from './services/media.service';
-import { MediaController } from './controllers/media.controller';
+import { MediaRepository } from './media.repository';
+import { MediaService } from './media.service';
+import { MediaController } from './media.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([MediaRepository])],

@@ -1,12 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { setupSwagger } from './shared/setup-swagger';
+import { setupSwagger } from './configs';
 import { Logger } from 'nestjs-pino';
 import { middleware as expressCtx } from 'express-ctx';
 import * as compression from 'compression';
 import { ConfigService } from '@nestjs/config';
 import { ConfigConstant } from './constants';
-import { getBoolean, getNumber } from './shared/utils';
+import { getBoolean, getNumber } from './common/utils';
 import { QueueModule } from './modules/queue/queue.module';
 import * as expressBasicAuth from 'express-basic-auth';
 import { QueueService } from './modules/queue/queue.service';

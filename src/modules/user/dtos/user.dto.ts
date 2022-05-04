@@ -1,8 +1,8 @@
-import { AbstractDto } from '../../../shared/abstract.dto';
+import { BaseDto } from '../../../common/base';
 import { RoleConstant } from '../../../constants';
-import { UserEntity } from '../entities/user.entity';
+import { UserEntity } from '../user.entity';
 
-export class UserDto extends AbstractDto {
+export class UserDto extends BaseDto {
   firstName?: string;
 
   lastName?: string;
