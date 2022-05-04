@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { MediaRepository } from './media.repository';
-import { MediaEntity } from './media.entity';
-import { CustomException } from '../../exceptions';
-import { ExceptionConstant } from '../../constants';
-import { FileService } from '../shared/file.service';
-import { IFile } from './interfaces/IFile';
+import { MediaRepository } from '../repositories/media.repository';
+import { MediaEntity } from '../entities/media.entity';
+import { CustomException } from '../../../exceptions';
+import { ExceptionConstant } from '../../../constants';
+import { FileService } from '../../shared/services/file.service';
+import { IFile } from '../interfaces/IFile';
 
 @Injectable()
 export class MediaService {

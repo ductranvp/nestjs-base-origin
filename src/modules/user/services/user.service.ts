@@ -1,8 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { UserRepository } from './user.repository';
-import { QueueService } from '../queue/queue.service';
+import { UserRepository } from '../repository/user.repository';
+import { QueueService } from '../../queue/services/queue.service';
 import { Cron } from '@nestjs/schedule';
-import { UserEntity } from './user.entity';
+import { UserEntity } from '../entities/user.entity';
 
 @Injectable()
 export class UserService {

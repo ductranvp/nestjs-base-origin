@@ -1,6 +1,6 @@
 import { BaseDto } from '../../../common/base';
 import { RoleConstant } from '../../../constants';
-import { UserEntity } from '../user.entity';
+import { UserEntity } from '../entities/user.entity';
 
 export class UserDto extends BaseDto {
   firstName?: string;

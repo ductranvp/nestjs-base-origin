@@ -9,7 +9,7 @@ import { ConfigConstant } from './constants';
 import { getBoolean, getNumber } from './common/utils';
 import { QueueModule } from './modules/queue/queue.module';
 import * as expressBasicAuth from 'express-basic-auth';
-import { QueueService } from './modules/queue/queue.service';
+import { QueueService } from './modules/queue/services/queue.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });

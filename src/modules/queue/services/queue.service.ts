@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bull';
-import { QueueNameConstant, QueueProcessConstant } from '../../constants';
+import { QueueNameConstant, QueueProcessConstant } from '../../../constants';
 import { Queue } from 'bull';
 import { createBullBoard } from 'bull-board';
 import { BullAdapter } from 'bull-board/bullAdapter';

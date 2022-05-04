@@ -3,7 +3,7 @@ import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
 import { createBullBoard } from 'bull-board';
 import { BullAdapter } from 'bull-board/bullAdapter';
-import { QueueNameConstant } from '../../constants';
+import { QueueNameConstant } from '../../../constants';
 
 @Injectable()
 export class QueueUiService {

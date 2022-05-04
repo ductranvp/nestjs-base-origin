@@ -1,6 +1,6 @@
 import { Column, Entity } from 'typeorm';
-import { BaseEntity } from '../../common/base';
-import { IFile } from './interfaces/IFile';
+import { BaseEntity } from '../../../common/base';
+import { IFile } from '../interfaces/IFile';
 
 @Entity()
 export class MediaEntity extends BaseEntity implements IFile {

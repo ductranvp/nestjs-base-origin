@@ -1,5 +1,5 @@
 import { getValue, setValue } from 'express-ctx';
-import { UserEntity } from '../modules/user/user.entity';
+import { UserEntity } from '../modules/user/entities/user.entity';
 import { LanguageConstant } from '../constants';
 
 export class ContextProvider {
