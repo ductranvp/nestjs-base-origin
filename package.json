@@ -20,7 +20,9 @@
     "debug": "rimraf dist && cross-env NODE_ENV=development nest start --debug --watch",
     "prod": "rimraf dist && nest build && cross-env NODE_ENV=production node dist/main",
     "seed:config": "cross-env NODE_ENV=development ts-node node_modules/typeorm-seeding/dist/cli.js config",
-    "seed:run": "cross-env NODE_ENV=development ts-node node_modules/typeorm-seeding/dist/cli.js seed"
+    "seed:run": "cross-env NODE_ENV=development ts-node node_modules/typeorm-seeding/dist/cli.js seed",
+    "migration:generate": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:generate -d src/database/generates -n",
+    "migration:create": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:create -d src/database/migrations -n"
   },
   "dependencies": {
     "@nestjs/bull": "^0.5.4",

@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv';
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 
-// fake data & migration
+// Typeorm configuration file which is used for migrations and seeds.
 const configs = {
   type: process.env.DB_TYPE,
   host: process.env.DB_HOST,
