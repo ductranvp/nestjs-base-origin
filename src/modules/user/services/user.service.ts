@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { UserRepository } from '../repository/user.repository';
+import { UserRepository } from '../repositories/user.repository';
 import { QueueService } from '../../queue/services/queue.service';
 import { Cron } from '@nestjs/schedule';
 import { UserEntity } from '../entities/user.entity';
