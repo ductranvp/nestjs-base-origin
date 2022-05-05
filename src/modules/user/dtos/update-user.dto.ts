@@ -2,7 +2,7 @@ import { BaseDto } from '../../../common/base';
 import { RoleConstant } from '../../../constants';
 import { UserEntity } from '../entities/user.entity';
 
-export class UserDto extends BaseDto {
+export class UpdateUserDto extends BaseDto {
   firstName?: string;
 
   lastName?: string;

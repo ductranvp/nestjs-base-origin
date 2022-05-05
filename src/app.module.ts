@@ -20,6 +20,7 @@ import {
   loggerConfig,
   queueConfig,
 } from './configs';
+import { AppScheduleModule } from './modules/schedule/app-schedule.module';
 
 @Module({
   imports: [
@@ -60,6 +61,8 @@ import {
     UserModule,
     QueueModule,
     MediaModule,
+    ScheduleModule,
+    AppScheduleModule,
   ],
   providers: [
     {

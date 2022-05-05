@@ -35,6 +35,8 @@
     "@nestjs/schedule": "^1.1.0",
     "@nestjs/swagger": "^5.2.1",
     "@nestjs/typeorm": "^8.0.3",
+    "@nestjsx/crud": "^5.0.0-alpha.3",
+    "@nestjsx/crud-typeorm": "^5.0.0-alpha.3",
     "aws-sdk": "^2.1122.0",
     "bcrypt": "^5.0.1",
     "bull": "^4.8.2",
