@@ -1,6 +1,6 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { registerAs } from '@nestjs/config';
-import { ConfigConstant, NodeEnvConstant } from '../constants';
+import { ConfigConstant } from '../constants';
 import { SnakeNamingStrategy } from './snake-naming.strategy';
 
 export default registerAs(ConfigConstant.DATABASE, (): TypeOrmModuleOptions => {
@@ -20,7 +20,7 @@ export default registerAs(ConfigConstant.DATABASE, (): TypeOrmModuleOptions => {
     database: process.env.DB_DATABASE,
     keepConnectionAlive: true,
     migrationsRun: true,
-    synchronize: process.env.NODE_ENV === NodeEnvConstant.DEVELOPMENT,
+    synchronize: false,
     logging: 'all',
     namingStrategy: new SnakeNamingStrategy(),
   };
