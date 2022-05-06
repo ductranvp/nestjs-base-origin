@@ -1,33 +1,37 @@
-import { BaseDto } from '../../../common/base';
 import { RoleConstant } from '../../../constants';
-import { UserEntity } from '../entities/user.entity';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  IsEmail,
+  IsEnum,
+  IsOptional,
+  IsPhoneNumber,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
-export class CreateUserDto extends BaseDto {
-  firstName?: string;
+export class CreateUserDto {
+  @ApiProperty({ type: 'string' })
+  firstName: string;
 
-  lastName?: string;
+  @ApiProperty({ type: 'string' })
+  lastName: string;
 
-  role?: RoleConstant;
+  @ApiProperty({ type: 'string', enum: RoleConstant })
+  @IsEnum(RoleConstant)
+  role: RoleConstant;
 
-  email?: string;
+  @ApiProperty({ type: 'string' })
+  @IsEmail()
+  email: string;
 
-  password?: string;
+  @ApiProperty({ type: 'string' })
+  @MinLength(8)
+  @MaxLength(16)
+  password: string;
 
+  @ApiProperty({ type: 'string' })
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsPhoneNumber()
   phone?: string;
-
-  avatar?: string;
-
-  isActive?: boolean;
-
-  constructor(user: UserEntity) {
-    super(user);
-    this.firstName = user.firstName;
-    this.lastName = user.lastName;
-    this.role = user.role;
-    this.email = user.email;
-    this.password = user.password;
-    this.phone = user.phone;
-    this.avatar = user.avatar;
-    this.isActive = user.isActive;
-  }
 }

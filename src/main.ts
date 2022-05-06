@@ -15,6 +15,7 @@ import { CrudConfigService } from '@nestjsx/crud';
 CrudConfigService.load({
   query: {
     maxLimit: 2000,
+    limit: 100,
     cache: 2000,
   },
   params: {
@@ -23,6 +24,17 @@ CrudConfigService.load({
       type: 'uuid',
       primary: true,
     },
+  },
+  routes: {
+    only: [
+      'createManyBase',
+      'createOneBase',
+      'getManyBase',
+      'getOneBase',
+      'updateOneBase',
+      'deleteOneBase',
+      'recoverOneBase',
+    ],
   },
 });
 
