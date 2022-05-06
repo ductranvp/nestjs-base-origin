@@ -9,7 +9,7 @@ import { QueueModule } from './modules/queue/queue.module';
 import { MediaModule } from './modules/media/media.module';
 import { I18nModule } from 'nestjs-i18n';
 import { AllExceptionsFilter } from './filters';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ConfigConstant } from './constants';
 import {
@@ -21,9 +21,22 @@ import {
   queueConfig,
 } from './configs';
 import { AppScheduleModule } from './modules/schedule/app-schedule.module';
+import {
+  KeycloakConnectModule,
+  AuthGuard,
+  ResourceGuard,
+  RoleGuard,
+} from 'nest-keycloak-connect';
 
 @Module({
   imports: [
+    KeycloakConnectModule.register({
+      authServerUrl: 'http://localhost:8888/',
+      realm: 'nestjs-realm',
+      clientId: 'nestjs-client',
+      secret: '8aaKgSP2UcKv5cgZjVUxOcFkjNjkGZuU',
+      // Secret key of the client taken from keycloak server
+    }),
     SharedModule,
     ConfigModule.forRoot({
       isGlobal: true,
@@ -65,6 +78,18 @@ import { AppScheduleModule } from './modules/schedule/app-schedule.module';
     AppScheduleModule,
   ],
   providers: [
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ResourceGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RoleGuard,
+    },
     {
       provide: APP_FILTER,
       useClass: AllExceptionsFilter,
