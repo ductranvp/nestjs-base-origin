@@ -10,9 +10,13 @@ import { getBoolean, getNumber } from './common/utils';
 import { QueueModule } from './modules/queue/queue.module';
 import * as expressBasicAuth from 'express-basic-auth';
 import { QueueService } from './modules/queue/services/queue.service';
+import httpsOptions from './configs/https.config';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { bufferLogs: true });
+  const app = await NestFactory.create(AppModule, {
+    bufferLogs: true,
+    httpsOptions: httpsOptions,
+  });
   const configService = app.get(ConfigService);
 
   app.use(expressCtx);

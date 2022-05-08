@@ -3,6 +3,7 @@ import { UserRepository } from '../repositories/user.repository';
 import { QueueService } from '../../queue/services/queue.service';
 import { Cron } from '@nestjs/schedule';
 import { UserEntity } from '../entities/user.entity';
+import { Transaction } from 'typeorm';
 
 @Injectable()
 export class UserService {
@@ -21,6 +22,7 @@ export class UserService {
     return this.userRepository.findOneOrFail({ id });
   }
 
+  @Transaction()
   createUser(payload: UserEntity) {
     return this.userRepository.save(payload);
   }
