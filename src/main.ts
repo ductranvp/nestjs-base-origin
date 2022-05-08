@@ -10,8 +10,16 @@ import { getBoolean, getNumber } from './common/utils';
 import { QueueModule } from './modules/queue/queue.module';
 import * as expressBasicAuth from 'express-basic-auth';
 import { QueueService } from './modules/queue/services/queue.service';
+import {
+  initializeTransactionalContext,
+  patchTypeORMRepositoryWithBaseRepository,
+} from 'typeorm-transactional-cls-hooked';
 
 async function bootstrap() {
+  // transactional decorator
+  initializeTransactionalContext(); // Initialize cls-hooked
+  patchTypeORMRepositoryWithBaseRepository(); // patch Repository with BaseRepository.
+
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
   const configService = app.get(ConfigService);
 

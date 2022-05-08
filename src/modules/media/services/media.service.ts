@@ -13,6 +13,10 @@ export class MediaService {
     private fileService: FileService,
   ) {}
 
+  get repo() {
+    return this.mediaRepository;
+  }
+
   async uploadFile(file: IFile) {
     try {
       const category = 'files';

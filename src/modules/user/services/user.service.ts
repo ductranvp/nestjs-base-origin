@@ -3,6 +3,9 @@ import { UserRepository } from '../repositories/user.repository';
 import { QueueService } from '../../queue/services/queue.service';
 import { Cron } from '@nestjs/schedule';
 import { UserEntity } from '../entities/user.entity';
+import { MediaEntity } from '../../media/entities/media.entity';
+import { MediaService } from '../../media/services/media.service';
+import { Transactional } from 'typeorm-transactional-cls-hooked';
 
 @Injectable()
 export class UserService {
@@ -11,7 +14,12 @@ export class UserService {
   constructor(
     private userRepository: UserRepository,
     private queueService: QueueService,
+    private mediaService: MediaService,
   ) {}
+
+  get repo() {
+    return this.userRepository;
+  }
 
   getUsers(query: any) {
     return this.userRepository.find();
@@ -21,7 +29,15 @@ export class UserService {
     return this.userRepository.findOneOrFail({ id });
   }
 
-  createUser(payload: UserEntity) {
+  @Transactional()
+  async createUser(payload: UserEntity) {
+    const media = new MediaEntity();
+    media.url = 'test transaction';
+    await this.mediaService.repo.save(media);
+    const temp = true;
+    if (temp) {
+      throw new Error('test transaction');
+    }
     return this.userRepository.save(payload);
   }
 
