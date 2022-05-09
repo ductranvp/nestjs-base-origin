@@ -15,6 +15,9 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     if (exception instanceof CustomException) {
       exception.error.timestamp = new Date();
+      // exception.error.key = this.i18n.t(exception.error.key, {
+      //   lang: LanguageConstant.vi,
+      // });
       response.status(exception.error.statusCode).json(exception.error);
     } else if (exception instanceof HttpException) {
       response.status(exception.getStatus()).json(exception.getResponse());

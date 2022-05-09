@@ -1,6 +1,7 @@
 # compiled output
 /dist
 /node_modules
+tsconfig.build.tsbuildinfo
 
 # Logs
 logs
@@ -41,3 +42,6 @@ lerna-debug.log*
 
 # docker
 docker-compose.yml
+
+# credentials
+credentials/*
