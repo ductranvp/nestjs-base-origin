@@ -37,3 +37,12 @@ export function getBoolean(value: string): boolean {
 export function getString(value: string): string {
   return value.replace(/\\n/g, '\n');
 }
+
+export function promiseWithTimeout(timeoutMs: number, promise: Promise<any>) {
+  return Promise.race([
+    promise,
+    new Promise((resolve, reject) =>
+      setTimeout(() => reject(new Error('timeout')), timeoutMs),
+    ),
+  ]);
+}

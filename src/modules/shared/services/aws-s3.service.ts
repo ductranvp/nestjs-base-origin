@@ -31,30 +31,6 @@ export class AwsS3Service implements OnApplicationBootstrap {
     this._s3 = new S3(options);
   }
 
-  async putObject({ key, file }: { key: string; file: IFile }) {
-    await this._s3
-      .putObject({
-        Bucket: this.s3Config.bucketName,
-        Body: file.buffer,
-        ACL: 'public-read',
-        Key: key,
-      })
-      .promise();
-    return key;
-  }
-
-  deleteFile(key) {
-    this._s3.deleteObject(
-      {
-        Bucket: this.s3Config.bucketName,
-        Key: key,
-      },
-      (error) => {
-        this.logger.error({ error });
-      },
-    );
-  }
-
   onApplicationBootstrap(): any {
     const bucketName = this.s3Config.bucketName;
 
@@ -77,5 +53,46 @@ export class AwsS3Service implements OnApplicationBootstrap {
         }
       },
     );
+  }
+
+  async putObject({ key, file }: { key: string; file: IFile }) {
+    await this._s3
+      .putObject({
+        Bucket: this.s3Config.bucketName,
+        Body: file.buffer,
+        ACL: 'public-read',
+        Key: key,
+      })
+      .promise();
+    return key;
+  }
+
+  deleteObject(key) {
+    this._s3.deleteObject(
+      {
+        Bucket: this.s3Config.bucketName,
+        Key: key,
+      },
+      (error) => {
+        this.logger.error({ error });
+      },
+    );
+  }
+
+  getBucketAlc() {
+    return new Promise((resolve, reject) => {
+      this._s3.getBucketAcl(
+        {
+          Bucket: this.s3Config.bucketName,
+        },
+        (error, result) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        },
+      );
+    });
   }
 }

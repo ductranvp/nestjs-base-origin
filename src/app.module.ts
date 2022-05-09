@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './modules/user/user.module';
 import { LoggerModule } from 'nestjs-pino';
 import { BullModule } from '@nestjs/bull';
+import { HealthModule } from './modules/health/health.module';
 import { QueueModule } from './modules/queue/queue.module';
 import { MediaModule } from './modules/media/media.module';
 import { I18nModule } from 'nestjs-i18n';
@@ -20,6 +21,7 @@ import {
   loggerConfig,
   queueConfig,
 } from './configs';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -60,6 +62,7 @@ import {
     UserModule,
     QueueModule,
     MediaModule,
+    HealthModule,
   ],
   providers: [
     {
@@ -68,5 +71,6 @@ import {
     },
   ],
   exports: [],
+  controllers: [AppController],
 })
 export class AppModule {}
