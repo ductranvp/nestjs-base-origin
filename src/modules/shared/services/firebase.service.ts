@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
 import * as firebase from 'firebase-admin';
 import * as fs from 'fs';
 
 @Injectable()
 export class FirebaseService {
+  private readonly logger = new Logger(FirebaseService.name);
   private readonly admin: firebase.app.App;
   constructor() {
     try {
@@ -14,9 +15,10 @@ export class FirebaseService {
       this.admin = firebase.initializeApp({
         credential: firebase.credential.cert(firebaseConfig as any),
       });
-      console.log('Firebase init successfully');
+      this.logger.log('Firebase admin initialized');
     } catch (e) {
-      throw new Error('credentials/firebase-admin.json not found');
+      this.logger.error(`credentials/firebase-admin.json not found`, e);
+      return;
     }
   }
 
